@@ -12,12 +12,13 @@ import guideme.scene.GuidebookLevelRenderer;
 import guideme.scene.GuidebookScene;
 import guideme.scene.LytGuidebookScene;
 import guideme.scene.level.GuidebookLevel;
+import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.client.input.MouseButtonEvent;
-import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.sounds.SoundManager;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Vec3i;
@@ -128,13 +129,13 @@ public class WorldDisplay extends AbstractWidget {
                         DUMMY_SCENE,
                         screenBounds,
                         scissorArea,
-                        (lightDarkMode, _, buffers) -> renderViewport(lightDarkMode, buffers)));
+                        (lightDarkMode, pose, submit) -> renderViewport(lightDarkMode, pose, submit)));
             }
         }
     }
 
-    private void renderViewport(LightDarkMode lightDarkMode, MultiBufferSource.BufferSource buffers) {
-        LEVEL_RENDERER.render(this.scene.getLevel(), this.scene.getCameraSettings(), buffers, List.of(), lightDarkMode);
+    private void renderViewport(LightDarkMode lightDarkMode, PoseStack pose, SubmitNodeCollector submit) {
+        LEVEL_RENDERER.render(this.scene.getLevel(), this.scene.getCameraSettings(), List.of(), lightDarkMode);
     }
 
     @Override

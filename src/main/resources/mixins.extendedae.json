@@ -8,7 +8,6 @@
     "MixinAEBasePart",
     "MixinAECraftingPattern",
     "MixinAppEngInternalInventory",
-    "MixinEnderSavedData",
     "MixinPatternAccessTermMenu"
   ],
   "client": [

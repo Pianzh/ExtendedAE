@@ -31,8 +31,7 @@ public class GuiConfigModifier extends AEBaseScreen<ContainerConfigModifier> {
         this.dataInput = widgets.addTextField("data_input");
         this.dataInput.setValue(String.valueOf(menu.data));
         this.dataInput.setMaxLength(15);
-        this.dataInput.setFilter(NUMBER.asMatchPredicate());
-        this.dataInput.setPlaceholder(Component.translatable("gui.extendedae.config_modifier.data_input"));
+                this.dataInput.setPlaceholder(Component.translatable("gui.extendedae.config_modifier.data_input"));
         this.dataInput.setResponder(this::syncData);
     }
 

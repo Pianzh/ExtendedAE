@@ -1,5 +1,6 @@
 package com.glodblock.github.extendedae.client.gui;
 
+import com.mojang.blaze3d.platform.InputConstants;
 import appeng.client.gui.AEBaseScreen;
 import appeng.client.gui.style.ScreenStyle;
 import appeng.client.gui.widgets.AETextField;
@@ -12,7 +13,6 @@ import net.minecraft.client.input.MouseButtonEvent;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
 import org.jetbrains.annotations.NotNull;
-import org.lwjgl.glfw.GLFW;
 
 public class GuiRenamer extends AEBaseScreen<ContainerRenamer> {
 
@@ -38,7 +38,7 @@ public class GuiRenamer extends AEBaseScreen<ContainerRenamer> {
 
     @Override
     public boolean keyPressed(@NotNull KeyEvent event) {
-        if (this.renameInputs.isFocused() && event.key() == GLFW.GLFW_KEY_ENTER) {
+        if (this.renameInputs.isFocused() && event.key() == InputConstants.KEY_RETURN) {
             this.renameInputs.setFocused(false);
             EAENetworkHandler.INSTANCE.sendToServer(new CEAEGenericPacket("set", this.renameInputs.getValue()));
             this.onClose();

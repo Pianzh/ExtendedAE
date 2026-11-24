@@ -1,5 +1,6 @@
 package com.glodblock.github.extendedae.client.gui;
 
+import com.mojang.blaze3d.platform.InputConstants;
 import appeng.api.config.RedstoneMode;
 import appeng.api.config.Settings;
 import appeng.client.gui.implementations.UpgradeableScreen;
@@ -17,7 +18,6 @@ import net.minecraft.client.input.MouseButtonEvent;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
 import org.jetbrains.annotations.NotNull;
-import org.lwjgl.glfw.GLFW;
 
 public class GuiModExportBus extends UpgradeableScreen<ContainerModExportBus> {
 
@@ -40,7 +40,7 @@ public class GuiModExportBus extends UpgradeableScreen<ContainerModExportBus> {
 
     @Override
     public boolean keyPressed(@NotNull KeyEvent event) {
-        if (event.key() == GLFW.GLFW_KEY_TAB && this.filterInputs.isFocused()) {
+        if (event.key() == InputConstants.KEY_TAB && this.filterInputs.isFocused()) {
             var suggest = FCClientUtil.getModName(this.filterInputs.getValue());
             if (!suggest.isEmpty()) {
                 this.filterInputs.setValue(this.filterInputs.getValue() + suggest);

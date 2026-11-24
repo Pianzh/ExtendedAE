@@ -16,7 +16,8 @@ public record DummyTileOwner(BlockEntity te) implements ItemOwner {
 
     @Override
     public @NotNull Vec3 position() {
-        return this.te.getBlockPos().getCenter();
+        var pos = this.te.getBlockPos();
+        return new Vec3(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5);
     }
 
     @Override

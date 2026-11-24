@@ -88,7 +88,7 @@ public class AssemblerGlassBakedModel implements DynamicBlockStateModel {
         var cons = F_MAP.get(side);
         builder.setSprite(sprite);
         builder.setDirection(side);
-        builder.setShade(true);
+        builder.setAmbientOcclusion(true);
         var normal = side.getUnitVec3i();
         var c1 = cons.get(0);
         var c2 = cons.get(1);
@@ -109,7 +109,7 @@ public class AssemblerGlassBakedModel implements DynamicBlockStateModel {
         var cons = this.calculateCorners(side, corner);
         builder.setSprite(this.glassSide);
         builder.setDirection(side);
-        builder.setShade(true);
+        builder.setAmbientOcclusion(true);
         var normal = side.getUnitVec3i();
         var c1 = cons.get(0);
         var c2 = cons.get(1);

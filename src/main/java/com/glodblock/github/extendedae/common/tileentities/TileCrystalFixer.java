@@ -27,6 +27,7 @@ import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.util.Prediction;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeInput;
 import net.minecraft.world.level.block.Blocks;
@@ -206,7 +207,7 @@ public class TileCrystalFixer extends AENetworkedPoweredBlockEntity implements I
         if (held.isEmpty()) {
             var stuff = this.inv.extractItem(0, Integer.MAX_VALUE, false);
             if (!stuff.isEmpty()) {
-                playerInv.placeItemBackInInventory(stuff);
+                playerInv.placeItemBackInInventory(stuff, Prediction.PREDICTED);
             }
         } else {
             var notAdded = this.inv.insertItem(0, held, false);

@@ -2,7 +2,7 @@ plugins {
     id 'java-library'
     id 'eclipse'
     id 'idea'
-    id 'net.neoforged.moddev' version '2.0.134'
+    id 'net.neoforged.moddev' version '2.0.147'
 }
 
 version = mod_version
@@ -64,6 +64,15 @@ sourceSets.main.resources {
     srcDir 'src/generated/resources'
 }
 
+// 26.3 port: integrations without a 26.3 build are excluded from compilation
+sourceSets.main.java {
+    exclude 'com/glodblock/github/extendedae/xmod/kjs/**'
+    exclude 'com/glodblock/github/extendedae/xmod/appflux/**'
+    exclude 'com/glodblock/github/extendedae/xmod/aae/**'
+    exclude 'com/glodblock/github/extendedae/mixins/MixinEnderSavedData.java'
+    exclude 'com/glodblock/github/extendedae/datagen/**'
+}
+
 repositories {
     mavenCentral()
     maven {
@@ -106,45 +115,31 @@ repositories {
 }
 
 dependencies {
-    implementation "io.github.glodblock:Glodium:26.1-1.2-neoforge"
-    implementation "org.appliedenergistics:appliedenergistics2:26.1.14-beta"
-    implementation "org.appliedenergistics:guideme:26.1.14-beta"
-    jarJar(implementation ("de.mari_023:ae2wtlib_api:26.1.1-beta") { transitive = false })
-    compileOnly "curse.maven:applied-flux-965012:9025081"
-    //compileOnly "dev.emi:emi-neoforge:1.1.10+1.21"
-    //compileOnly "curse.maven:mega-cells-622112:6005043"
-    compileOnly "curse.maven:jade-324717:8857417"
-    compileOnly "me.shedaniel:RoughlyEnoughItems-neoforge:26.1.819"
-    //compileOnly "mekanism:Mekanism:1.21.1-10.7.17.83"
-    //compileOnly "curse.maven:applied-mekanistics-574300:5978711"
-    compileOnly "curse.maven:kubejs-238086:8235730"
-    compileOnly "dev.latvian.mods:rhino:2101.2.7-build.85"
-    compileOnly "curse.maven:advancedae-1084104:8236325"
-    compileOnly "curse.maven:functional-storage-556861:8723367"
-    compileOnly "mezz.jei:jei-26.1.2-neoforge:29.54.0.122"
-    //compileOnly "curse.maven:appliede-1009940:6500056"
-    //compileOnly "curse.maven:projecte-226410:6611984"
+    implementation "io.github.glodblock:Glodium:26.3-1.0-neoforge"
+    implementation "org.appliedenergistics:appliedenergistics2:26.3.2-alpha"
+    implementation "org.appliedenergistics:guideme:26.3.7-alpha"
+    jarJar(implementation ("de.mari_023:ae2wtlib_api:26.3.2-beta") { transitive = false })
+    compileOnly "dev.external:jade:26.3.5"
+    compileOnly "mezz.jei:jei-26.3-neoforge:31.18.0.127"
+    // 26.3 builds not available yet - integrations disabled for this port
+    //compileOnly "curse.maven:applied-flux-965012:9025081"
+    //compileOnly "curse.maven:kubejs-238086:8235730"
+    //compileOnly "dev.latvian.mods:rhino:2101.2.7-build.85"
+    //compileOnly "curse.maven:advancedae-1084104:8236325"
+    //compileOnly "curse.maven:functional-storage-556861:8723367"
     // runtime test
-    runtimeOnly "curse.maven:applied-flux-965012:9025081"
-    runtimeOnly ("de.mari_023:ae2wtlib:26.1.1-beta") { transitive = false }
-    runtimeOnly "curse.maven:jade-324717:8857417"
-    //runtimeOnly "curse.maven:mega-cells-622112:6005043"
-    //runtimeOnly "mekanism:Mekanism:1.21.1-10.7.17.83"
-    //runtimeOnly "curse.maven:appliede-1009940:6500056"
-    //runtimeOnly "curse.maven:projecte-226410:6611984"
+    runtimeOnly "mezz.jei:jei-26.3-neoforge:31.18.0.127"
+    runtimeOnly ("de.mari_023:ae2wtlib:26.3.2-beta") { transitive = false }
     // setup Xei
     switch(use_Xei) {
         case "emi":
             //runtimeOnly "dev.emi:emi-neoforge:1.1.10+1.21"
             break
         case "rei":
-            runtimeOnly "me.shedaniel:RoughlyEnoughItems-neoforge:26.1.819"
-            runtimeOnly "dev.architectury:architectury-neoforge:20.0.10"
-            runtimeOnly "curse.maven:cloth-config-348521:7817583"
+            // 26.3 REI build not available yet
             break
         case "jei":
-            runtimeOnly "mezz.jei:jei-26.1.2-neoforge:29.54.0.122"
-            runtimeOnly "curse.maven:mezzconfig-1689768:9527941"
+            runtimeOnly "mezz.jei:jei-26.3-neoforge:31.18.0.127"
             break
     }
 }
