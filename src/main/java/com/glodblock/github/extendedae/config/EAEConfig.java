@@ -45,23 +45,25 @@ public class EAEConfig {
             .comment("Pattern modifier multipliers")
             .defineList("item.pattern_modifier_multipliers", defaultModifierMultiplier, EAEConfig::checkPositive);
 
+    private static final List<String> DEFAULT_TAPE_WHITELIST = List.of(
+            "extendedae:ex_interface_part",
+            "extendedae:ex_pattern_provider_part",
+            "extendedae:ex_interface",
+            "extendedae:ex_pattern_provider",
+            "extendedae:ex_drive",
+            "extendedae:oversize_interface",
+            "extendedae:oversize_interface_part",
+            "ae2:cable_interface",
+            "ae2:cable_pattern_provider",
+            "ae2:interface",
+            "ae2:pattern_provider",
+            "ae2:drive"
+    );
+
     @SuppressWarnings("deprecation")
     private static final ModConfigSpec.ConfigValue<@NotNull List<? extends String>> PACKABLE_AE_DEVICE = BUILDER
             .comment("The AE device/part that can be packed by ME Packing Tape")
-            .defineList("item.me_packing_tape_whitelist", List.of(
-                    "extendedae:ex_interface_part",
-                    "extendedae:ex_pattern_provider_part",
-                    "extendedae:ex_interface",
-                    "extendedae:ex_pattern_provider",
-                    "extendedae:ex_drive",
-                    "extendedae:oversize_interface",
-                    "extendedae:oversize_interface_part",
-                    "ae2:cable_interface",
-                    "ae2:cable_pattern_provider",
-                    "ae2:interface",
-                    "ae2:pattern_provider",
-                    "ae2:drive"
-            ), _ -> true);
+            .defineList("item.me_packing_tape_whitelist", DEFAULT_TAPE_WHITELIST, _ -> true);
 
     private static final ModConfigSpec.BooleanValue INSCRIBER_RENDER = BUILDER
             .comment("Disable Extended Inscriber's item render, it only works in client side")
@@ -101,7 +103,7 @@ public class EAEConfig {
     public static double infCellCost;
     public static double wirelessMaxRange;
     public static double wirelessPowerMultiplier;
-    public static List<Identifier> tapeWhitelist;
+    public static List<Identifier> tapeWhitelist = DEFAULT_TAPE_WHITELIST.stream().map(Identifier::parse).collect(Collectors.toList());
     public static boolean disableInscriberRender;
     private static int oversizeMultiplier;
     private static Map<Identifier, Integer> customOversizeMultiplier;
@@ -130,6 +132,8 @@ public class EAEConfig {
             wirelessMaxRange = WIRELESS_CONNECTOR_RANGE.get();
             wirelessPowerMultiplier = WIRELESS_CONNECTOR_POWER_MULTIPLIER.get();
             tapeWhitelist = PACKABLE_AE_DEVICE.get().stream().map(Identifier::parse).collect(Collectors.toList());
+            // 26.3: config loads after common setup, (re-)register so user-edited whitelist takes effect
+            tapeWhitelist.forEach(com.glodblock.github.extendedae.common.items.ItemMEPackingTape::registerPackableDevice);
             disableInscriberRender = INSCRIBER_RENDER.get();
             oversizeMultiplier = OVERSIZE_MULTIPLIER.get();
             customOversizeMultiplier = new Object2IntOpenHashMap<>();
